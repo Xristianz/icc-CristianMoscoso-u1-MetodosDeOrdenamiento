@@ -1,71 +1,77 @@
 public class MetodoSeleccion {
-    public int ordenarDesSeleccion(int[] arreglo, boolean conPasos) {
+
+    public int[] ordenarAscendente(int[] arreglo, boolean pasos) {
         int n = arreglo.length;
         int contComparaciones = 0;
-        
-        for (int i = 0; i < n - 1; i++) {
-            int maxIdx = i;
-            
-            for (int j = i + 1; j < n; j++) {
-                contComparaciones++;
-                if (arreglo[maxIdx] < arreglo[j]) {
-                    maxIdx = j;
-                }
-                
-                if (conPasos) {
-                    System.out.println("Comparando " + arreglo[maxIdx] + " con " + arreglo[j]);
-                }
-            }
-            
-            if (maxIdx != i) {
-                int aux = arreglo[maxIdx];
-                arreglo[maxIdx] = arreglo[i];
-                arreglo[i] = aux;
-                
-                if (conPasos) {
-                    System.out.print("Intercambio -> ");
-                    imprimirArreglo(arreglo);
-                }
-            }
-        }
-        return contComparaciones;
-    }
-    
-    public int ordenarAsdSeleccion(int[] arreglo, boolean conPasos) {
-        int n = arreglo.length;
-        int contComparaciones = 0;
-        
+        int contCambios = 0;
         for (int i = 0; i < n - 1; i++) {
             int minIdx = i;
-            
             for (int j = i + 1; j < n; j++) {
+                if (pasos) {
+                    System.out.println("Comparando " + arreglo[j] + " (posición " + j + ") con " + arreglo[minIdx] + " (posición " + minIdx + ")");
+                }
                 contComparaciones++;
-                if (arreglo[minIdx] > arreglo[j]) {
+                if (arreglo[j] < arreglo[minIdx]) {
+                    if (pasos) {
+                        System.out.println("índice del menor: " + arreglo[j]);
+                    }
                     minIdx = j;
                 }
-                
-                if (conPasos) {
-                    System.out.println("Comparando " + arreglo[minIdx] + " con " + arreglo[j]);
-                }
             }
-            
             if (minIdx != i) {
                 int aux = arreglo[minIdx];
                 arreglo[minIdx] = arreglo[i];
+                contCambios++;
+                if (pasos) {
+                    System.out.println("Intercambiando " + arreglo[minIdx] + " (posición " + minIdx + ") con " + arreglo[i] + " (posición " + i + ")");
+                }
                 arreglo[i] = aux;
-                
-                if (conPasos) {
-                    System.out.print("Intercambio -> ");
+                if (pasos) {
                     imprimirArreglo(arreglo);
                 }
             }
         }
-        return contComparaciones;
+        int[] contadores = {contComparaciones, contCambios};
+        return contadores;
     }
-    
-    private void imprimirArreglo(int[] arreglo) {
+
+    public int[] ordenarDescendente(int[] arreglo, boolean pasos) {
+        int n = arreglo.length;
+        int contComparaciones = 0;
+        int contCambios = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int maxIdx = i;
+            for (int j = i + 1; j < n; j++) {
+                contComparaciones++;
+                if (pasos) {
+                    System.out.println("Comparando " + arreglo[j] + " (posición " + j + ") con " + arreglo[maxIdx] + " (posición " + maxIdx + ")");
+                }
+                if (arreglo[j] > arreglo[maxIdx]) {
+                    if (pasos) {
+                        System.out.println("índice del mayor: " + arreglo[j]);
+                    }
+                    maxIdx = j;
+                }
+            }
+            if (maxIdx != i) {
+                int aux = arreglo[maxIdx];
+                arreglo[maxIdx] = arreglo[i];
+                if (pasos) {
+                    System.out.println("Intercambiando " + arreglo[maxIdx] + " (posición " + maxIdx + ") con " + arreglo[i] + " (posición " + i + ")");
+                }
+                arreglo[i] = aux;
+                if (pasos) {
+                    imprimirArreglo(arreglo);
+                }
+            }
+        }
+        int[] contadores = {contComparaciones, contCambios};
+        return contadores;
+    }
+
+    public void imprimirArreglo(int[] arreglo) {
         for (int i = 0; i < arreglo.length; i++) {
-            System.out.print(arreglo[i] + "-");
+            System.out.print(arreglo[i] + " - ");
         }
         System.out.println();
     }
